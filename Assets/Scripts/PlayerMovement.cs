@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundMask;
 
+    public Collider collide;
+
     
     Vector3 velocity;
     bool isGrounded;
@@ -22,6 +24,9 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
 
+        bool onIncline = isOnIncline();
+
+        
 
         if (isGrounded && velocity.y < 0){
             velocity.y = -2f;
@@ -40,5 +45,19 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         control.Move(velocity * Time.deltaTime);
+    }
+
+
+    bool isOnIncline(){
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, Vector3.forward);
+
+        
+
+        if (collide.Raycast(ray, out hit, 1000f)){
+            print("COLLIDED WITH SOMETHING \t Angle: \t"/*+ Vector3.Angle(hit.normal, transform.forward)*/);
+        }
+
+        return false;
     }
 }
