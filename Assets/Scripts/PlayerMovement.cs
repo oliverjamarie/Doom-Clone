@@ -11,8 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = -9.81f;
     public float groundCheckRadius = 0.4f;
     public float jumpHeight = 3f;
-    public Transform groundCheck;
-    public LayerMask groundMask;
+    //public Transform groundCheck;
+    //public LayerMask groundMask;
 
     
     Vector3 velocity;
@@ -21,12 +21,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
-        isGrounded = checkGrounded();
+        isGrounded = control.isGrounded;
 
         bool onIncline = isOnIncline();
-
-        
 
         if (isGrounded && velocity.y < 0){
             velocity.y = -2f;
@@ -69,21 +66,17 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    bool checkGrounded(){
-        RaycastHit hit;
-        Ray ray = new Ray(transform.position, Vector3.down);
-
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit)){
-            
-            if (hit.distance < 2f){
-                return true;
-            }
-        }
-        
-        return false;
+    void OnTriggerEnter(Collider collision){
+        print("Player: trigger");
     }
 
-    void onTriggerEnter(Collider collision){
-        print("Player: collider");
+    void OnColliderEnter(Collider collision){
+        print("Player Collider");
     }
+
+    void OnTriggerStay(Collider other){
+        print("Player: bruh, social distancing");
+    }
+
+    
 }
