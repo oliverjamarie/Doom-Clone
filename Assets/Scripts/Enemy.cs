@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    void onTriggerEnter(Collider collision){
-        print("Enemy: collider");
+    void OnTriggerEnter(Collider collision){
+        print("Enemy: trigger");
     }
+
+    void OnTriggerStay(Collider other){
+        print("bruh, social distancing");
+    }
+
 }
