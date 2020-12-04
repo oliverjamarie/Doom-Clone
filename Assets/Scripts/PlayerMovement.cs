@@ -7,13 +7,12 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController control;
 
     public float speed = 12f;
+    public float sprintModifyer = 1.5f;
     public float gravity = -9.81f;
     public float groundCheckRadius = 0.4f;
     public float jumpHeight = 3f;
     public Transform groundCheck;
     public LayerMask groundMask;
-
-    public Collider collide;
 
     
     Vector3 velocity;
@@ -22,7 +21,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
+        //isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundMask);
+        isGrounded = checkGrounded();
 
         bool onIncline = isOnIncline();
 
@@ -35,8 +35,13 @@ public class PlayerMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical"); 
 
         Vector3 move = transform.right * x + transform.forward * z;
+        float moveSpeed = speed;
 
-        control.Move(move * speed * Time.deltaTime);
+        if (Input.GetKeyDown(KeyCode.LeftShift)){
+            moveSpeed *= sprintModifyer;
+        }
+
+        control.Move(move * moveSpeed * Time.deltaTime);
 
         if (Input.GetButtonDown("Jump") && isGrounded){
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
@@ -50,14 +55,35 @@ public class PlayerMovement : MonoBehaviour
 
     bool isOnIncline(){
         RaycastHit hit;
-        Ray ray = new Ray(transform.position, Vector3.forward);
-
+        Ray ray = new Ray(transform.position, Vector3.down);
         
 
-        if (collide.Raycast(ray, out hit, 1000f)){
-            print("COLLIDED WITH SOMETHING \t Angle: \t"/*+ Vector3.Angle(hit.normal, transform.forward)*/);
+        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit)){
+            Vector3 direction = hit.point - transform.position;
+
+            float angle = Vector3.Angle(direction, transform.TransformDirection(Vector3.down));
+
+            return true;
         }
 
         return false;
+    }
+
+    bool checkGrounded(){
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, Vector3.down);
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit)){
+            
+            if (hit.distance < 2f){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
+    void onTriggerEnter(Collider collision){
+        print("Player: collider");
     }
 }
