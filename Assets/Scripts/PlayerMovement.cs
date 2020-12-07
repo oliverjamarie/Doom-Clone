@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController control;
-    public Animator animate;
+    Animator animator;
 
     public float speed = 12f;
     public float sprintModifyer = 1.5f;
@@ -15,13 +16,13 @@ public class PlayerMovement : MonoBehaviour
     //public Transform groundCheck;
     //public LayerMask groundMask;
 
-    void Start (){
-        animate = GetComponent<Animator>();
-    }
-
     
     Vector3 velocity;
     bool isGrounded;
+
+    void Start(){
+        animator = GetComponentInChildren<Animator>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -30,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = control.isGrounded;
 
         bool onIncline = isOnIncline();
+        bool isSprinting = false;
 
         if (isGrounded && velocity.y < 0){
             velocity.y = 0f;
@@ -42,6 +44,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift)){
             moveSpeed *= sprintModifyer;
+            isSprinting = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift)){
+            isSprinting = false;
+            animator.SetBool("Run",false);
         }
 
         control.Move(move * moveSpeed * Time.deltaTime);
@@ -53,6 +60,23 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         control.Move(velocity * Time.deltaTime);
+
+        if(control.isGrounded && (x != 0 || z != 0)){
+            if (!isSprinting){
+                animator.SetBool("Walk",true);
+            }
+            else{
+                animator.SetBool("Run",true);
+            }
+        }
+        else{
+            animator.SetBool("Walk",false);
+            animator.SetBool("Run",false);
+        }
+
+        if(Input.GetKeyDown(KeyCode.R)){
+            animator.Play("Reload Ammo Left");
+        }
     }
 
 
@@ -71,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
 
         return false;
     }
-
+/*
     void OnTriggerEnter(Collider collision){
         print("Player: trigger");
     }
@@ -84,5 +108,5 @@ public class PlayerMovement : MonoBehaviour
         print("Player: bruh, social distancing");
     }
 
-    
+    */
 }
