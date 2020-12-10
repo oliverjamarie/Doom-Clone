@@ -5,8 +5,9 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public Transform goal;
+    public GameObject player;
     NavMeshAgent agent;
+    Transform goal;
 
     bool reachedTarget;
     CharacterController charControl;
@@ -17,6 +18,15 @@ public class EnemyMovement : MonoBehaviour
         agent = GetComponentInChildren<UnityEngine.AI.NavMeshAgent>();
         reachedTarget = false;
         charControl = GetComponent<CharacterController>();
+        
+        GameObject search = player.transform.Find("Player Target Fd").gameObject;
+
+        if (search != null){
+            goal = search.transform;
+        }
+        else {
+            print("no target");
+        }
     }
 
     void Update(){
