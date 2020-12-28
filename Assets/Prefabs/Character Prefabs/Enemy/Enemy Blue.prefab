@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 64849300459975409}
   - component: {fileID: 487258956994249369}
   - component: {fileID: 3004086209160482843}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e5e3d81ea46f1f79288216f680bffd1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5350451598965064023}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,9 +159,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7363600113010103890}
   - component: {fileID: 8506718484883531727}
-  - component: {fileID: 1519583798232993304}
   - component: {fileID: 2627401267749679564}
-  m_Layer: 0
+  - component: {fileID: -8654066912325642235}
+  m_Layer: 9
   m_Name: Enemy Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7363600113010103895}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.44, y: 10.574, z: 36.83}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5350451598965064023}
@@ -196,21 +196,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d5fffa6b79f187a9ab3447a7b4c49d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goal: {fileID: 0}
---- !u!114 &1519583798232993304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7363600113010103895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60ced1ef20bad4491b69152c375e9fd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  idleAnimation: {fileID: 9100000, guid: a8555c0cff30527479e32562cef9141f, type: 2}
-  jumpAnimation: {fileID: 9100000, guid: 54ff599963ec97843ad4d4ddeeb61810, type: 2}
+  playerObject: {fileID: 0}
+  speed: 8
+  totalDelay: 1.5
+  followType: 1
+  targetType: 0
 --- !u!54 &2627401267749679564
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -227,3 +217,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-8654066912325642235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7363600113010103895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 363d4984e86fd42b9b16de220e1a955b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHealth: 100
+  isAlive: 1
