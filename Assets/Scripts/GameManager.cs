@@ -27,8 +27,9 @@ public class GameManager : MonoBehaviour
             
 
             Instantiate(enemy,SpawnPoints[randSpawn]);
-
+            
             enemy.GetComponent<EnemyMovement>().playerObject = player;
+            
             
 
             characters.Add(enemy);
