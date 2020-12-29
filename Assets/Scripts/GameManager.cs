@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
             
 
             Instantiate(enemy,SpawnPoints[randSpawn]);
-            
 
             characters.Add(enemy);
         }
