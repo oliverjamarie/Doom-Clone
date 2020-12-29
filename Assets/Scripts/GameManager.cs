@@ -22,14 +22,14 @@ public class GameManager : MonoBehaviour
             int randSpawn = (int) (Random.value * 100) % SpawnPoints.Capacity;
             int randEnemy = (int) (Random.value * 100) % EnemyTypes.Capacity;
 
-            GameObject enemy = EnemyTypes[randEnemy];
-            
-            
 
-            Instantiate(enemy,SpawnPoints[randSpawn]);
+
+            GameObject enemy = EnemyTypes[randEnemy];
             
             enemy.GetComponent<EnemyMovement>().playerObject = player;
             
+
+            Instantiate(enemy,SpawnPoints[randSpawn]);
             
 
             characters.Add(enemy);
